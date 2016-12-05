@@ -1,5 +1,8 @@
-*/
-!*.java
-!*.png
-!*.jpeg
-!*.jpg
+*.gradle
+*.txt
+*.properties
+*.xml
+*.js
+*.css
+*.ipr
+*.iws

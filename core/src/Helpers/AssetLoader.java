@@ -12,7 +12,7 @@ public class AssetLoader {
 	public static Texture back;
 	
 	public static void load () {
-		allCards = new Texture(Gdx.files.internal("cards.png"));
+		allCards = new Texture(Gdx.files.internal("android/assets/cards.png"));
 //		for ( int i = 0; i < 4; i ++ ) {
 //			cards.add(new ArrayList<TextureRegion>());
 //			for ( int ii = 0; ii < 13; ii ++ ) {
@@ -21,7 +21,7 @@ public class AssetLoader {
 //			}
 //		}
 		
-		back = new Texture(Gdx.files.internal("cardback.png"));
+		back = new Texture(Gdx.files.internal("android/assets/cardback.png"));
 	}
 	
 	public static void dispose() {
