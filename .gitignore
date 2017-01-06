@@ -10,7 +10,7 @@
 android/gen/
 android/libs/
 out/
-android/ic_jauncher.png
+android/ic_jauncher-web.png
 android/res/
 core/build/
 desktop/build/
