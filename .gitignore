@@ -10,3 +10,11 @@
 android/gen/
 android/libs/
 out/
+android/ic_jauncher.png
+android/res/
+core/build/
+desktop/build/
+gradlew
+html/src
+html/webapp/index.html
+ios/src
