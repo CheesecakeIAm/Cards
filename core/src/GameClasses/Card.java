@@ -11,6 +11,7 @@ public class Card {
 	private int number;
 	private Vector2 position;
 	private Vector2 tempPosition;
+	private Vector2 space;
 	private Vector2 size;
 	private Vector2 visibleSize;
 	private TextureRegion cardTexture;
@@ -77,6 +78,17 @@ public class Card {
 		tempPosition = pos;
 	}
 
+	public void move (float amountX, float amountY) {
+		this.setPosition(position.add(amountX, amountY));
+	}
+
+	public Vector2 getSpace() {
+		return space;
+	}
+	public void setSpace(Vector2 space) {
+		this.space = space;
+	}
+
 	public TextureRegion getTexture() {
 		if (visible)
 			return cardTexture;
@@ -93,12 +105,11 @@ public class Card {
 
 	public void setDragged(boolean dragged) {
 		this.dragged = dragged;
-		if(dragged == true) {
-			tempPosition = position;
+		if(dragged) {
+
 
 		}
-		if(dragged == false) {
-
+		if(!dragged) {
 
 		}
 	}

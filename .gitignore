@@ -18,3 +18,5 @@ gradlew
 html/src
 html/webapp/index.html
 ios/src
+android/build/
+build/

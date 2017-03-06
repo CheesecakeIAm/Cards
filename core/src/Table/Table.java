@@ -133,6 +133,10 @@ public class Table {
 					mouseY >= hands.get(0).getCard(i).getPosition().y &&
 					mouseY <= hands.get(0).getCard(i).getPosition().y + hands.get(0).getCard(i).getVisibleSize().y) {
 				hands.get(0).getCard(i).setDragged(true);
+				hands.get(0).getCard(i).setTempPosition(hands.get(0).getCard(i).getPosition());
+				hands.get(0).getCard(i).setSpace(new Vector2(
+						mouseX - hands.get(0).getCard(i).getTempPosition().x,
+						mouseY - hands.get(0).getCard(i).getTempPosition().y));
 			}
 		}
 	}
@@ -140,15 +144,28 @@ public class Table {
 	public void dragging(int mouseX, int mouseY) {
 		for (int i = 0; i < hands.get(0).getSize(); i++) {
 			if(hands.get(0).getCard(i).getDragged()) {
-				hands.get(0).getCard(i).setPosition(new Vector2(mouseX, mouseY));
+				hands.get(0).getCard(i).setPosition(new Vector2(
+						mouseX - hands.get(0).getCard(i).getSpace().x,
+						mouseY - hands.get(0).getCard(i).getSpace().y));
 			}
 		}
 	}
 
-	public void released() {
+	public void released(int mouseX, int mouseY) {
 		for (int i = 0; i < hands.get(0).getSize(); i++) {
-			if(hands.get(0).getCard(i).getDragged())
+			if (hands.get(0).getCard(i).getDragged()) {
 				hands.get(0).getCard(i).setDragged(false);
+
+				for (int ii = 0; ii < piles.size(); ii++) {
+					if (hands.get(0).getCard(i).getPosition().x >= piles.get(ii).getPosition().x - model.getSize().x/2&&
+							hands.get(0).getCard(i).getPosition().x <= piles.get(ii).getPosition().x + model.getSize().x/2 &&
+							hands.get(0).getCard(i).getPosition().y >= piles.get(ii).getPosition().y - model.getSize().y/2 &&
+							hands.get(0).getCard(i).getPosition().y <= piles.get(ii).getPosition().y + model.getSize().y/2) {
+						piles.get(ii).addCard(hands.get(0).takeCard(i));
+						break;
+					}
+				}
+			}
 		}
 	}
 }
