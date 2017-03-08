@@ -157,12 +157,18 @@ public class Table {
 				hands.get(0).getCard(i).setDragged(false);
 
 				for (int ii = 0; ii < piles.size(); ii++) {
-					if (hands.get(0).getCard(i).getPosition().x >= piles.get(ii).getPosition().x - model.getSize().x/2&&
+					if (hands.get(0).getCard(i).getPosition().x >= piles.get(ii).getPosition().x - model.getSize().x/2 &&
 							hands.get(0).getCard(i).getPosition().x <= piles.get(ii).getPosition().x + model.getSize().x/2 &&
 							hands.get(0).getCard(i).getPosition().y >= piles.get(ii).getPosition().y - model.getSize().y/2 &&
-							hands.get(0).getCard(i).getPosition().y <= piles.get(ii).getPosition().y + model.getSize().y/2) {
+							hands.get(0).getCard(i).getPosition().y <= piles.get(ii).getPosition().y + model.getSize().y/2 ||
+							mouseX >= piles.get(ii).getPosition().x && mouseX <= piles.get(ii).getPosition().x + model.getSize().x &&
+							mouseY >= piles.get(ii).getPosition().y && mouseY <= piles.get(ii).getPosition().y + model.getSize().y )
+							{
 						piles.get(ii).addCard(hands.get(0).takeCard(i));
 						break;
+					}
+					else {
+						hands.get(0).getCard(i).setPosition(hands.get(0).getCard(i).getTempPosition());
 					}
 				}
 			}
