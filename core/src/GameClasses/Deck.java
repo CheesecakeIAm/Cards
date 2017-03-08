@@ -38,6 +38,9 @@ public class Deck {
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
+	public Vector2 getPosition() {
+		return position;
+	}
 	public Card getCard( int i ){
 		return cards.get(i);
 	}

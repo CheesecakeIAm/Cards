@@ -45,5 +45,15 @@ public class Pile {
 	public void reset() {
 		
 	}
+	public boolean getMoveLegality(Card newCard) {
+		System.out.println(newCard.getNumber()+", "+cards.get(cards.size()-1).getNumber());
+		if (newCard.getNumber() == cards.get(cards.size()-1).getNumber() - 1) {
+			if ((newCard.getSuit() - cards.get(cards.size()-1).getSuit()) % 2 == 1 ) {
+				System.out.println("yayayayayay");
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

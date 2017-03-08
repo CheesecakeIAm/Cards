@@ -16,6 +16,7 @@ public class Table {
 	private Deck deck;
 	private ArrayList <Hand> hands;
 	private ArrayList <Pile> piles;
+	private boolean drawing;
 //	private ArrayList <Vector2> pileLocations;
 	
 	public Table() {
@@ -53,6 +54,8 @@ public class Table {
 
 		for ( int i = 0; i < 4; i ++ )
 			this.makePile(i);
+
+		this.drawing = false;
 	}
 	
 	public void update(float delta) {
@@ -79,7 +82,7 @@ public class Table {
 
 	public void deal (int number, int hand) {
 		for ( int i = 0; i < number; i ++ ) {
-			hands.get(hand).addCard(deck.getCards().remove(deck.getSize()-1));
+			hands.get(hand).addCard(deck.drawCard(1));
 			switch (hand) {
 			case 0:
 				hands.get(hand).getCard(i).setPosition(new Vector2(
@@ -139,6 +142,9 @@ public class Table {
 						mouseY - hands.get(0).getCard(i).getTempPosition().y));
 			}
 		}
+		if ( mouseX >= deck.getPosition().x && mouseX <= deck.getPosition().x + model.getSize().x &&
+				mouseY >= deck.getPosition().y && mouseY <= deck.getPosition().y + model.getSize().y )
+			drawing = true;
 	}
 	
 	public void dragging(int mouseX, int mouseY) {
@@ -149,29 +155,35 @@ public class Table {
 						mouseY - hands.get(0).getCard(i).getSpace().y));
 			}
 		}
+		if (!(mouseX >= deck.getPosition().x && mouseX <= deck.getPosition().x + model.getSize().x &&
+				mouseY >= deck.getPosition().y && mouseY <= deck.getPosition().y + model.getSize().y) )
+			drawing = false;
 	}
 
 	public void released(int mouseX, int mouseY) {
 		for (int i = 0; i < hands.get(0).getSize(); i++) {
 			if (hands.get(0).getCard(i).getDragged()) {
 				hands.get(0).getCard(i).setDragged(false);
-
 				for (int ii = 0; ii < piles.size(); ii++) {
 					if (hands.get(0).getCard(i).getPosition().x >= piles.get(ii).getPosition().x - model.getSize().x/2 &&
 							hands.get(0).getCard(i).getPosition().x <= piles.get(ii).getPosition().x + model.getSize().x/2 &&
 							hands.get(0).getCard(i).getPosition().y >= piles.get(ii).getPosition().y - model.getSize().y/2 &&
 							hands.get(0).getCard(i).getPosition().y <= piles.get(ii).getPosition().y + model.getSize().y/2 ||
 							mouseX >= piles.get(ii).getPosition().x && mouseX <= piles.get(ii).getPosition().x + model.getSize().x &&
-							mouseY >= piles.get(ii).getPosition().y && mouseY <= piles.get(ii).getPosition().y + model.getSize().y )
-							{
-						piles.get(ii).addCard(hands.get(0).takeCard(i));
-						break;
-					}
-					else {
+							mouseY >= piles.get(ii).getPosition().y && mouseY <= piles.get(ii).getPosition().y + model.getSize().y ) {
+						if (piles.get(ii).getMoveLegality(hands.get(0).getCard(i))) {
+							piles.get(ii).addCard(hands.get(0).takeCard(i));
+							break;
+						}
+					} else {
 						hands.get(0).getCard(i).setPosition(hands.get(0).getCard(i).getTempPosition());
 					}
 				}
 			}
 		}
+		if ( mouseX >= deck.getPosition().x && mouseX <= deck.getPosition().x + model.getSize().x &&
+				mouseY >= deck.getPosition().y && mouseY <= deck.getPosition().y + model.getSize().y &&
+				drawing == true)
+			hands.get(0).addCard(deck.drawCard(1));
 	}
 }
