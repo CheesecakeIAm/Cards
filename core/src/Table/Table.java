@@ -188,8 +188,9 @@ public class Table {
 							piles.get(ii).addCard(hands.get(0).takeCard(i));
 							break;
 						}
-					} else {
+					} else if (ii == piles.size()-1) {
 						hands.get(0).getCard(i).setPosition(hands.get(0).getCard(i).getTempPosition());
+						System.out.println("here");
 					}
 				}
 			}

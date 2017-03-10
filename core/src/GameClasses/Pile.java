@@ -12,7 +12,7 @@ public class Pile {
 	
 	public Pile() {
 		
-		cards = new ArrayList <>();
+		cards = new ArrayList <Card>();
 		
 	}
 	public ArrayList <Card> getCards() {
