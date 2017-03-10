@@ -8,10 +8,11 @@ public class Pile {
 	
 	private ArrayList <Card> cards;
 	private Vector2 position;
+	private boolean hovered;
 	
 	public Pile() {
 		
-		cards = new ArrayList <Card>();
+		cards = new ArrayList <>();
 		
 	}
 	public ArrayList <Card> getCards() {
@@ -36,11 +37,32 @@ public class Pile {
 	public Vector2 getPosition() {
 		return position;
 	}
-	public void hovered(Card model, Vector2 size) {
-		for ( int i = 0; i < this.getSize(); i ++ ) 
-			cards.get(i).setPosition(new Vector2(
-					size.x/2+model.getSize().x/4*(i-cards.size()/2)-model.getSize().x/2,
-					position.y));
+	public void hovered(int pileNumber) {
+		switch (pileNumber) {
+			case 0: //left
+				for (int i = 0; i < this.getSize(); i++)
+					cards.get(i).setPosition(new Vector2(position.x - 1/4f*cards.get(i).getSize().x*(this.getSize() - 1 - i), position.y));
+				break;
+			case 1: //up
+				for (int i = 0; i < this.getSize(); i++)
+					cards.get(i).setPosition(new Vector2(position.x + 1/4f*cards.get(i).getSize().x*(1/2f + i - this.getSize()/2f), position.y));
+				break;
+			case 2: //right
+				for (int i = 0; i < this.getSize(); i++)
+					cards.get(i).setPosition(new Vector2((int)(position.x + 1/4f*cards.get(i).getSize().x*(i)), position.y));
+				break;
+			case 3: //down
+				for (int i = 0; i < this.getSize(); i++)
+					cards.get(i).setPosition(new Vector2(position.x + 1/4f*cards.get(i).getSize().x*(1/2f + i - this.getSize()/2f), position.y));
+				break;
+		}
+
+	}
+	public void setHovered(boolean hovered) {
+		this.hovered = hovered;
+	}
+	public boolean getHovered() {
+		return hovered;
 	}
 	public void reset() {
 		
@@ -48,8 +70,7 @@ public class Pile {
 	public boolean getMoveLegality(Card newCard) {
 		System.out.println(newCard.getNumber()+", "+cards.get(cards.size()-1).getNumber());
 		if (newCard.getNumber() == cards.get(cards.size()-1).getNumber() - 1) {
-			if ((newCard.getSuit() - cards.get(cards.size()-1).getSuit()) % 2 == 1 ) {
-				System.out.println("yayayayayay");
+			if ((newCard.getSuit() - cards.get(cards.size()-1).getSuit() + 4) % 2 == 1 ) {
 				return true;
 			}
 		}

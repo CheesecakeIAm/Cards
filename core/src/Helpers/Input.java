@@ -62,6 +62,7 @@ public class Input implements InputProcessor{
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		// TODO Auto-generated method stub
+		myTable.moving(screenX, screenY);
 		return false;
 	}
 

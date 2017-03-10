@@ -1,5 +1,7 @@
 package GameClasses;
 
+import com.badlogic.gdx.math.Vector2;
+
 import java.util.ArrayList;
 
 public class Hand {
@@ -20,7 +22,12 @@ public class Hand {
 	}
 	public void addCard(Card card) {
 		card.setVisible(visible);
+//		for(int i = 0; i < cards.size(); i ++) {
+//			cards.get(i).move(cards.get(i).getSize().x / -8, 0);
+//		}
+//		card.setPosition(new Vector2(cards.get(cards.size()-1).getPosition().x + card.getSize().x/8, cards.get(cards.size()-1).getPosition().y));
 		cards.add(card);
+
 	}
 	public Card takeCard(int location) {
 		if(cards.size()>1) {
