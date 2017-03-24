@@ -17,6 +17,7 @@ public class Table {
 	private ArrayList <Hand> hands;
 	private ArrayList <Pile> piles;
 	private boolean drawing;
+	private boolean cardTaken;
 //	private ArrayList <Vector2> pileLocations;
 	
 	public Table() {
@@ -177,6 +178,7 @@ public class Table {
 		for (int i = 0; i < hands.get(0).getSize(); i++) {
 			if (hands.get(0).getCard(i).getDragged()) {
 				hands.get(0).getCard(i).setDragged(false);
+				cardTaken = false;
 				for (int ii = 0; ii < piles.size(); ii++) {
 					if (hands.get(0).getCard(i).getPosition().x >= piles.get(ii).getPosition().x - model.getSize().x/2 &&
 							hands.get(0).getCard(i).getPosition().x <= piles.get(ii).getPosition().x + model.getSize().x/2 &&
@@ -186,12 +188,15 @@ public class Table {
 							mouseY >= piles.get(ii).getPosition().y && mouseY <= piles.get(ii).getPosition().y + model.getSize().y ) {
 						if (/*piles.get(ii).getMoveLegality(hands.get(0).getCard(i))*/ true) {
 							piles.get(ii).addCard(hands.get(0).takeCard(i));
+							cardTaken = true;
+							System.out.println("ETHAN IS STRAIGHT");
 							break;
 						}
-					} else if (ii == piles.size()-1) {
-						hands.get(0).getCard(i).setPosition(hands.get(0).getCard(i).getTempPosition());
-						System.out.println("here");
 					}
+				}
+				if (!cardTaken) {
+					hands.get(0).getCard(i).setPosition(hands.get(0).getCard(i).getTempPosition());
+					System.out.println("here");
 				}
 			}
 		}
